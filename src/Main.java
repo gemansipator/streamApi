@@ -1,15 +1,40 @@
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        List<Animal> animals = getAnimals();
+        // Filter   отфильтруем хищников
+        List<Animal> predators = animals.stream()
+                .filter(animal -> animal.getClassification().equals(Classification.PREDATOR))
+                .collect(Collectors.toList()); //сборка в коллекцию
+//        predators.forEach(System.out::println);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        // Sort   отсортируем по возрасту
+        List<Animal> sorted = animals.stream()
+                .sorted(Comparator.comparing(Animal::getAge))
+                .collect(Collectors.toList());
+        sorted.forEach(System.out::println);
+        // All match, Any match, None match, Max, Min, Group
+
+
+
+
+    }
+    private static List<Animal> getAnimals() {
+        return List.of(
+                new Animal("Слон", 20, Classification.HERBIVORE),
+                new Animal("Лев", 10, Classification.PREDATOR),
+                new Animal("Гиена", 11, Classification.PREDATOR),
+                new Animal("Жираф", 7, Classification.HERBIVORE),
+                new Animal("Гибон", 35, Classification.OMNIVOROUS),
+                new Animal("Лошадь", 36, Classification.HERBIVORE),
+                new Animal("Рысь", 2, Classification.PREDATOR),
+                new Animal("Динозавр", 200, Classification.PREDATOR)
+        );
     }
 }
